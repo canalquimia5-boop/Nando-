@@ -17,7 +17,7 @@ import { testimonialsByLanguage, TestimonialItem } from '../data/testimonialsDat
 
 const Testimonials: React.FC = () => {
   const { language, t } = useLanguage();
-  const data = testimonialsByLanguage[language] || testimonialsByLanguage.pt;
+  const data = testimonialsByLanguage[language] || testimonialsByLanguage.en;
   
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});

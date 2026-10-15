@@ -20,13 +20,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (saved && (saved === 'pt' || saved === 'en' || saved === 'es')) {
         return saved;
       }
-      // Check browser language
-      const browserLang = navigator.language.toLowerCase();
-      if (browserLang.startsWith('es')) return 'es';
-      if (browserLang.startsWith('en')) return 'en';
-      return 'pt';
+      return 'en';
     } catch {
-      return 'pt';
+      return 'en';
     }
   });
 
@@ -45,7 +41,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   const t = useMemo(() => {
-    return translations[language] || translations.pt;
+    return translations[language] || translations.en;
   }, [language]);
 
   return (

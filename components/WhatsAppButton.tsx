@@ -10,7 +10,7 @@ const WhatsAppButton: React.FC = () => {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60]">
+    <div className="fixed bottom-6 left-6 z-[60]">
       <motion.a
         href={whatsappUrl}
         target="_blank"
@@ -29,9 +29,9 @@ const WhatsAppButton: React.FC = () => {
         
         {/* Tooltip on hover */}
         <motion.span 
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: -20 }}
           whileHover={{ opacity: 1, x: 0 }}
-          className="absolute right-20 bg-white text-slate-900 px-4 py-2 rounded-xl text-sm font-bold shadow-xl border border-slate-100 whitespace-nowrap pointer-events-none"
+          className="absolute left-20 bg-white text-slate-900 px-4 py-2 rounded-xl text-sm font-bold shadow-xl border border-slate-100 whitespace-nowrap pointer-events-none"
         >
           {t.whatsapp.tooltip}
         </motion.span>
