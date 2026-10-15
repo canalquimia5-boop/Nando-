@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isValidId(docId) {
+      return docId.matches('^[a-zA-Z0-9_\\-]+$') && docId.size() <= 128;
+    }
+
+    function isValidProject(data) {
+      return data.keys().hasAll(['id', 'title', 'url', 'categoryKey', 'image'])
+        && data.keys().hasOnly(['id', 'title', 'url', 'categoryKey', 'originalCategory', 'image', 'description', 'createdAt'])
+        && (data.id is number || data.id is string)
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 200
+        && data.url is string && data.url.size() > 0 && data.url.size() <= 1000
+        && data.categoryKey is string && data.categoryKey.size() <= 100
+        && (!('originalCategory' in data) || (data.originalCategory is string && data.originalCategory.size() <= 100))
+        && data.image is string && data.image.size() <= 2000
+        && (!('description' in data) || (data.description is string && data.description.size() <= 5000))
+        && (!('createdAt' in data) || data.createdAt is number);
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create: if isValidId(projectId) && isValidProject(request.resource.data);
+      allow update: if isValidId(projectId) && isValidProject(request.resource.data);
+      allow delete: if isValidId(projectId);
+    }
+    
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
